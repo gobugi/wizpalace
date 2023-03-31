@@ -1,0 +1,88 @@
+html {
+  font-size: 62.5%;
+  font-family: 'Libre Baskerville', serif;
+}
+
+body {
+  font-size: 2rem;
+  line-height: 1.5;
+  background: rgb(225,250,242);
+  background: linear-gradient(170deg, rgba(225,250,242,1) 0%, rgba(4,84,52,1) 100%);
+  overflow-y:hidden;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 4rem;
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  background-color: #20a779;
+
+  padding: 6rem 0;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+#wiz-head {
+  width: 90%;
+    -webkit-animation: cssAnimation 5s forwards; 
+    animation: cssAnimation 5s forwards;
+}
+
+@keyframes cssAnimation {
+    0%   {opacity: 0; width:90%; height:auto;}
+    30%  {opacity: 1; width:90%; height:auto;}
+    70%  {opacity: 1; width:90%; height:auto;}
+    99%  {opacity: 0; width:90%; height:auto;}
+    100% {opacity: 0; width:0%; height:0%;}
+}
+@-webkit-keyframes cssAnimation {
+    0%   {opacity: 0; width:90%; height:auto;}
+    30%  {opacity: 1; width:90%; height:auto;}
+    70%  {opacity: 1; width:90%; height:auto;}
+    99%  {opacity: 0; width:90%; height:auto;}
+    100% {opacity: 0; width:0%; height:0%;}
+}
+
+
+
+
+
+
+#chat-log {
+  height: 15rem;
+}
+
+form {
+  display: none;
+}
+
+/* img {
+  width: 100%;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 2rem;
+  line-height: 1.5;
+  color: black;
+}
+
+h1 {
+  color: gray;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: 6rem;
+} */
