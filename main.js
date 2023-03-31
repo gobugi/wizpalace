@@ -53,12 +53,29 @@ window.addEventListener("DOMContentLoaded", async () => {
   const tinman = document.getElementById("tinman");
   const dorothy = document.getElementById("dorothy");
   const lion = document.getElementById("lion");
+  const header = document.querySelector("header");
+  const h1 = document.querySelector("h1");
+
+  const wizProfileContainer = document.createElement("div");
+  wizProfileContainer.classList.add("wiz-profile-container");
+
+  const wizProfileImg = document.createElement("img");
+  wizProfileImg.classList.add("wiz-profile-img");
+  wizProfileImg.src = "images/wiz-profile.png";
+
+  const wizProfileText = document.createElement("div");
+  wizProfileText.classList.add("wiz-profile-text");
+  wizProfileText.innerHTML = 'Wizard of Oz';
 
   scarecrow.addEventListener("click", (e) => {
     const initialMessage = { role: "user", content: "Hi, I'm Scarecrow." };
     messages.push(initialMessage);
     profileContainer.style.display = "none";
     form.style.display = "block";
+    h1.style.display = "none";
+    header.appendChild(wizProfileContainer);
+    wizProfileContainer.appendChild(wizProfileImg);
+    wizProfileContainer.appendChild(wizProfileText);
   });
 
   tinman.addEventListener("click", (e) => {
