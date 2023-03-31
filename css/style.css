@@ -107,7 +107,8 @@ h1 {
 }
 
 #chat-log {
-  height: 15rem;
+  height: 65vh;
+  width: 80%;
 }
 
 form {
