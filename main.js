@@ -83,6 +83,10 @@ window.addEventListener("DOMContentLoaded", async () => {
     messages.push(initialMessage);
     profileContainer.style.display = "none";
     form.style.display = "block";
+    h1.style.display = "none";
+    header.appendChild(wizProfileContainer);
+    wizProfileContainer.appendChild(wizProfileImg);
+    wizProfileContainer.appendChild(wizProfileText);
   });
 
   dorothy.addEventListener("click", (e) => {
@@ -90,6 +94,10 @@ window.addEventListener("DOMContentLoaded", async () => {
     messages.push(initialMessage);
     profileContainer.style.display = "none";
     form.style.display = "block";
+    h1.style.display = "none";
+    header.appendChild(wizProfileContainer);
+    wizProfileContainer.appendChild(wizProfileImg);
+    wizProfileContainer.appendChild(wizProfileText);
   });
 
   lion.addEventListener("click", (e) => {
@@ -97,5 +105,9 @@ window.addEventListener("DOMContentLoaded", async () => {
     messages.push(initialMessage);
     profileContainer.style.display = "none";
     form.style.display = "block";
+    h1.style.display = "none";
+    header.appendChild(wizProfileContainer);
+    wizProfileContainer.appendChild(wizProfileImg);
+    wizProfileContainer.appendChild(wizProfileText);
   });
 });
