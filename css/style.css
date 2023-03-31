@@ -81,16 +81,15 @@ h1 {
 }
 
 #profiles {
-  min-width: 100%;
+  max-width: 40rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
 
 #profiles > div {
-  background-color: #9999ff;
-  height: 30vh;
-  width: 30vw;
+  height: 20vh;
+  width: 20vw;
   display: flex; 
   flex-basis: 50%;  
   justify-content: center;
@@ -98,7 +97,14 @@ h1 {
   flex-direction: column;
 }
 
+.profile-img {
+  height: 15rem;
+  width: 15rem;
+}
 
+.profile-img:hover {
+  cursor: pointer;
+}
 
 #chat-log {
   height: 15rem;

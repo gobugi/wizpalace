@@ -4,82 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Wiz Palace</title>
-  
+    <script src="main.js" type="text/javascript"></script>
+    
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-
+    
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" type="image/x-icon" href="https://user-images.githubusercontent.com/80723197/229058496-6b63b37a-d1b5-400e-8f87-d2fda3593a25.png">
+    <title>Wiz Palace</title>
   </head>
   <body>
     <main>
-      <h1>Welcome to the Emerald City</h1>  
-      <img id="wiz-head" class="animate__animated animate__zoomIn" src="https://raw.githubusercontent.com/gobugi/wizpalace/main/images/wiz.webp?token=GHSAT0AAAAAAB5FOPXFS6CSP3NTMEEFTTQ4ZBGTWAQ" alt="Wizard of Oz Robot Head">
+      <h1>Wiz Palace</h1>  
+      <img id="wiz-head" src="https://user-images.githubusercontent.com/80723197/229074392-d278bdc9-59e3-4a8c-b9b9-10003d1350a0.png" alt="Wizard of Oz Robot Head">
       <div id="select-profile-container">
         <div id="who-are-you">~ "Who are you?" ~</div>
         <div id="profiles">
-          <div>HELLO</div>
-          <div>HELLO</div>
-          <div>HELLO</div>
-          <div>HELLO</div>
+          <div>
+            <img class="profile-img" id="scarecrow" src="./images/scarecrow.png" alt="Scarecrow">
+          </div>
+          <div>
+            <img class="profile-img" id="tinman" src="./images/tinman.png" alt="The Tin Man">
+          </div>
+          <div>
+            <img class="profile-img" id="dorothy" src="./images/dorothy.png" alt="Dorothy">
+          </div>
+          <div>
+            <img class="profile-img" id="lion" src="./images/lion.png" alt="The Cowardly Lion">
+          </div>
         </div>
       </div>
-      
-      <div id="chat-log">
-
-      </div>
+      <div id="chat-log"></div>
       <form action="">
         <input type="text" name="message" id="message">
         <button type="submit">Send</button>
       </form>
     </main>
-	  <script>
-      let messages = []
-      const chatLog = document.getElementById('chat-log');
-      const message = document.getElementById('message');
-      const form = document.querySelector('form');
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const messageText = message.value;
-        const newMessage = {"role": "user", "content": `${messageText}`}
-        messages.push(newMessage)
-        message.value = '';
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        messageElement.classList.add('message--sent');
-        messageElement.innerHTML = `
-          <div class="message__text">${messageText}</div>
-        `;
-        chatLog.appendChild(messageElement);
-        chatLog.scrollTop = chatLog.scrollHeight;
-        fetch('https://wizpalace.azurewebsites.net/api/gptfunction?', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            messages
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
-          let newAssistantMessage = {"role": "assistant", "content": `${data.completion.content}`}
-          messages.push(newAssistantMessage)
-          const messageElement = document.createElement('div');
-          messageElement.classList.add('message');
-          messageElement.classList.add('message--received');
-          messageElement.innerHTML = `
-            <div class="message__text">${data.completion.content}</div>
-          `;
-          chatLog.appendChild(messageElement);
-          chatLog.scrollTop = chatLog.scrollHeight;
-        })
-      })
-    </script>
   </body>
 </html>
