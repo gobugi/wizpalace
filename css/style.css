@@ -20,7 +20,7 @@ main {
 
 h1 {
   font-family: 'Libre Baskerville', serif;
-  font-size: 4rem;
+  font-size: 3.2rem;
   font-weight: bolder;
   color: rgb(255, 255, 255);
   background-color: #20a779;
@@ -39,18 +39,18 @@ h1 {
 }
 
 @keyframes headAnimation {
-    0%   {opacity: 0; width:90%; height:auto;}
-    30%  {opacity: 1; width:90%; height:auto;}
-    70%  {opacity: 1; width:90%; height:auto;}
-    99%  {opacity: 0; width:90%; height:auto;}
-    100% {opacity: 0; width:0%; height:0%;}
+  0%   {opacity: 0; width:90%; height:auto;}
+  30%  {opacity: 1; width:90%; height:auto;}
+  70%  {opacity: 1; width:90%; height:auto;}
+  99%  {opacity: 0; width:90%; height:auto;}
+  100% {opacity: 0; width:0%; height:0%;}
 }
 @-webkit-keyframes headAnimation {
-    0%   {opacity: 0; width:90%; height:auto;}
-    30%  {opacity: 1; width:90%; height:auto;}
-    70%  {opacity: 1; width:90%; height:auto;}
-    99%  {opacity: 0; width:90%; height:auto;}
-    100% {opacity: 0; width:0%; height:0%;}
+  0%   {opacity: 0; width:90%; height:auto;}
+  30%  {opacity: 1; width:90%; height:auto;}
+  70%  {opacity: 1; width:90%; height:auto;}
+  99%  {opacity: 0; width:90%; height:auto;}
+  100% {opacity: 0; width:0%; height:0%;}
 }
 
 #select-profile-container {
@@ -65,17 +65,38 @@ h1 {
 }
 
 @keyframes profilesAnimation {
-    0%    {opacity: 0;}
-    0.5%  {opacity: 0;}
-    0.7%  {opacity: 1;}
+  0%    {opacity: 0;}
+  0.5%  {opacity: 0;}
+  0.7%  {opacity: 1;}
 }
 @-webkit-keyframes profilesAnimation {
-    0%    {opacity: 0;}
-    0.5%  {opacity: 0;}
-    0.7%  {opacity: 1;}
+  0%    {opacity: 0;}
+  0.5%  {opacity: 0;}
+  0.7%  {opacity: 1;}
 }
 
+#who-are-you {
+  padding: 2rem;
+  margin-bottom: 4rem;
+}
 
+#profiles {
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+#profiles > div {
+  background-color: #9999ff;
+  height: 30vh;
+  width: 30vw;
+  display: flex; 
+  flex-basis: 50%;  
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 
 
