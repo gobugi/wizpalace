@@ -113,25 +113,7 @@ h1 {
 
 form {
   display: none;
+  position: fixed;
+  bottom: 5%;
 }
 
-/* img {
-  width: 100%;
-}
-
-body {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 2rem;
-  line-height: 1.5;
-  color: black;
-}
-
-h1 {
-  color: gray;
-  margin-bottom: 1rem;
-  line-height: 1.1;
-}
-
-h1 {
-  font-size: 6rem;
-} */
