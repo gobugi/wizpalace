@@ -34,18 +34,18 @@ h1 {
 
 #wiz-head {
   width: 90%;
-    -webkit-animation: cssAnimation 5s forwards; 
-    animation: cssAnimation 5s forwards;
+  -webkit-animation: headAnimation 5s forwards; 
+  animation: headAnimation 5s forwards;
 }
 
-@keyframes cssAnimation {
+@keyframes headAnimation {
     0%   {opacity: 0; width:90%; height:auto;}
     30%  {opacity: 1; width:90%; height:auto;}
     70%  {opacity: 1; width:90%; height:auto;}
     99%  {opacity: 0; width:90%; height:auto;}
     100% {opacity: 0; width:0%; height:0%;}
 }
-@-webkit-keyframes cssAnimation {
+@-webkit-keyframes headAnimation {
     0%   {opacity: 0; width:90%; height:auto;}
     30%  {opacity: 1; width:90%; height:auto;}
     70%  {opacity: 1; width:90%; height:auto;}
@@ -53,6 +53,27 @@ h1 {
     100% {opacity: 0; width:0%; height:0%;}
 }
 
+#select-profile-container {
+  margin: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+  font-style: italic;
+  -webkit-animation: profilesAnimation 1000s forwards; 
+  animation: profilesAnimation 1000s forwards;
+}
+
+@keyframes profilesAnimation {
+    0%   {opacity: 0;}
+    0.5%   {opacity: 0;}
+    0.7%   {opacity: 1;}
+}
+@-webkit-keyframes profilesAnimation {
+    0%   {opacity: 0;}
+    0.5%   {opacity: 0;}
+    0.7%   {opacity: 1;}
+}
 
 
 
