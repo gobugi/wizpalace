@@ -1,27 +1,9 @@
 window.addEventListener("DOMContentLoaded", async () => {
-
   document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
-  
+
   let messages = [];
 
-  const chatLog = document.getElementById("chat-log");
-  const message = document.getElementById("message");
-  const form = document.querySelector("form");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const messageText = message.value;
-    const newMessage = { role: "user", content: `${messageText}` };
-    messages.push(newMessage);
-    message.value = "";
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message");
-    messageElement.classList.add("message--sent");
-    messageElement.innerHTML = `
-          <div class="message__text">${messageText}</div>
-        `;
-    chatLog.appendChild(messageElement);
-    chatLog.scrollTop = chatLog.scrollHeight;
+  const fetchResponse = () => {
     fetch("https://wizpalace.azurewebsites.net/api/gptfunction?", {
       method: "POST",
       headers: {
@@ -42,21 +24,38 @@ window.addEventListener("DOMContentLoaded", async () => {
         messageElement.classList.add("message");
         messageElement.classList.add("message--received");
         messageElement.innerHTML = `
-          <div class="message__text">${data.completion.content}</div>
-        `;
+      <div class="message__text">${data.completion.content}</div>
+    `;
         chatLog.appendChild(messageElement);
         chatLog.scrollTop = chatLog.scrollHeight;
       });
+  };
+
+  const chatLog = document.getElementById("chat-log");
+  const message = document.getElementById("message");
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const messageText = message.value;
+    const newMessage = { role: "user", content: `${messageText}` };
+    messages.push(newMessage);
+    message.value = "";
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    messageElement.classList.add("message--sent");
+    messageElement.innerHTML = `
+          <div class="message__text">${messageText}</div>
+        `;
+    chatLog.appendChild(messageElement);
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    fetchResponse();
   });
 
   // clicking profile
   const profileContainer = document.getElementById("select-profile-container");
   const formContainer = document.getElementById("form-container");
-  
-  const scarecrow = document.getElementById("scarecrow");
-  const tinman = document.getElementById("tinman");
-  const dorothy = document.getElementById("dorothy");
-  const lion = document.getElementById("lion");
   const header = document.querySelector("header");
   const h1 = document.querySelector("h1");
 
@@ -71,54 +70,27 @@ window.addEventListener("DOMContentLoaded", async () => {
   wizProfileText.classList.add("wiz-profile-text");
   wizProfileText.innerHTML = "Wizard of Oz";
 
-  scarecrow.addEventListener("click", (e) => {
-    const initialMessage = { role: "user", content: "Hi, I'm Scarecrow." };
-    messages.push(initialMessage);
-    profileContainer.style.display = "none";
-    formContainer.style.display = "block";
-    h1.style.display = "none";
-    header.appendChild(wizProfileContainer);
-    wizProfileContainer.appendChild(wizProfileImg);
-    wizProfileContainer.appendChild(wizProfileText);
+  const profiles = [
+    { name: "scarecrow", content: "Hi, I'm Scarecrow." },
+    { name: "tinman", content: "Hi, I'm the Tin Man." },
+    { name: "dorothy", content: "Hi, I'm Dorothy Gale." },
+    { name: "lion", content: "Hi, I'm the Cowardly Lion." },
+  ];
+
+  profiles.map((obj) => {
+    document.getElementById(obj.name).addEventListener("click", (e) => {
+      profileContainer.style.display = "none";
+      formContainer.style.display = "block";
+      h1.style.display = "none";
+      header.appendChild(wizProfileContainer);
+      wizProfileContainer.appendChild(wizProfileImg);
+      wizProfileContainer.appendChild(wizProfileText);
+      const newMessage = { role: "user", content: obj.content };
+      messages.push(newMessage);
+      fetchResponse();
+    });
   });
 
-  tinman.addEventListener("click", (e) => {
-    const initialMessage = { role: "user", content: "Hi, I'm the Tin Man." };
-    messages.push(initialMessage);
-    profileContainer.style.display = "none";
-    formContainer.style.display = "block";
-    h1.style.display = "none";
-    header.appendChild(wizProfileContainer);
-    wizProfileContainer.appendChild(wizProfileImg);
-    wizProfileContainer.appendChild(wizProfileText);
-  });
-
-  dorothy.addEventListener("click", (e) => {
-    const initialMessage = { role: "user", content: "Hi, I'm Dorothy Gale." };
-    messages.push(initialMessage);
-    profileContainer.style.display = "none";
-    formContainer.style.display = "block";
-    h1.style.display = "none";
-    header.appendChild(wizProfileContainer);
-    wizProfileContainer.appendChild(wizProfileImg);
-    wizProfileContainer.appendChild(wizProfileText);
-  });
-
-  lion.addEventListener("click", (e) => {
-    const initialMessage = {
-      role: "user",
-      content: "Hi, I'm the Cowardly Lion.",
-    };
-    messages.push(initialMessage);
-    profileContainer.style.display = "none";
-    formContainer.style.display = "block";
-    h1.style.display = "none";
-    header.appendChild(wizProfileContainer);
-    wizProfileContainer.appendChild(wizProfileImg);
-    wizProfileContainer.appendChild(wizProfileText);
-  });
-
-  ////////////////////////////////////////////////////////////////////////////
   // autoscroll upon new addition to chat-log
 
   const chatLogContainer = document.getElementById("chat-log-container");
