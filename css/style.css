@@ -29,6 +29,7 @@ main {
   height: 100%;
   width: auto;
   font-size: 1.5rem;
+  position: relative;
 }
 header {
   background-color: #20a779;
