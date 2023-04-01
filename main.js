@@ -1,4 +1,7 @@
 window.addEventListener("DOMContentLoaded", async () => {
+
+  document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
+  
   let messages = [];
 
   const chatLog = document.getElementById("chat-log");
@@ -119,11 +122,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   const chatLogContainer = document.getElementById("chat-log-container");
 
-  const mutationObserver = new MutationObserver(entries => {
+  const mutationObserver = new MutationObserver((entries) => {
     if (entries) {
       chatLogContainer.scrollTo(0, chatLogContainer.scrollHeight);
     }
   });
 
-  mutationObserver.observe(chatLog, { childList: true })
+  mutationObserver.observe(chatLog, { childList: true });
 });
