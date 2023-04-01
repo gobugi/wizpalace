@@ -126,7 +126,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   const mutationObserver = new MutationObserver((entries) => {
     if (entries) {
       chatLogContainer.scrollTo(0, chatLogContainer.scrollHeight);
-      document.documentElement.setAttribute("align-items", "center");
     }
   });
 
