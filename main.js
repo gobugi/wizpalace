@@ -28,27 +28,27 @@ window.addEventListener("DOMContentLoaded", async () => {
         messages,
       }),
     })
-    .then((res) => res.json())
-    .then((data) => {
-      let newAssistantMessage = {
-        role: "assistant",
-        content: `${data.completion.content}`,
-      };
-      messages.push(newAssistantMessage);
-      const messageElement = document.createElement("div");
-      messageElement.classList.add("message");
-      messageElement.classList.add("message--received");
-      messageElement.innerHTML = `
+      .then((res) => res.json())
+      .then((data) => {
+        let newAssistantMessage = {
+          role: "assistant",
+          content: `${data.completion.content}`,
+        };
+        messages.push(newAssistantMessage);
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.classList.add("message--received");
+        messageElement.innerHTML = `
           <div class="message__text">${data.completion.content}</div>
         `;
-      chatLog.appendChild(messageElement);
-      chatLog.scrollTop = chatLog.scrollHeight;
-    });
+        chatLog.appendChild(messageElement);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      });
   });
 
   // clicking profile
   const profileContainer = document.getElementById("select-profile-container");
-  
+
   const scarecrow = document.getElementById("scarecrow");
   const tinman = document.getElementById("tinman");
   const dorothy = document.getElementById("dorothy");
@@ -65,7 +65,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   const wizProfileText = document.createElement("div");
   wizProfileText.classList.add("wiz-profile-text");
-  wizProfileText.innerHTML = 'Wizard of Oz';
+  wizProfileText.innerHTML = "Wizard of Oz";
 
   scarecrow.addEventListener("click", (e) => {
     const initialMessage = { role: "user", content: "Hi, I'm Scarecrow." };
@@ -101,7 +101,10 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 
   lion.addEventListener("click", (e) => {
-    const initialMessage = { role: "user", content: "Hi, I'm the Cowardly Lion." };
+    const initialMessage = {
+      role: "user",
+      content: "Hi, I'm the Cowardly Lion.",
+    };
     messages.push(initialMessage);
     profileContainer.style.display = "none";
     form.style.display = "block";
@@ -110,4 +113,17 @@ window.addEventListener("DOMContentLoaded", async () => {
     wizProfileContainer.appendChild(wizProfileImg);
     wizProfileContainer.appendChild(wizProfileText);
   });
+
+  ////////////////////////////////////////////////////////////////////////////
+  // autoscroll upon new addition to chat-log
+
+  const chatLogContainer = document.getElementById("chat-log-container");
+
+  const mutationObserver = new MutationObserver(entries => {
+    if (entries) {
+      chatLogContainer.scrollTo(0, chatLogContainer.scrollHeight);
+    }
+  });
+
+  mutationObserver.observe(chatLog, { childList: true })
 });
