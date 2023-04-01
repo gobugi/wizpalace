@@ -5,6 +5,8 @@ html {
   width: auto;
   overflow: hidden;
   scroll-behavior: smooth;
+  align-items: center;
+  text-align: center;
 }
 
 html > * {
@@ -18,6 +20,8 @@ body {
   background: linear-gradient(170deg, rgba(225,250,242,1) 0%, rgba(4,84,52,1) 100%);
   height: 100%;
   width: auto;
+  align-items: center;
+  text-align: center;
 }
 
 main {
