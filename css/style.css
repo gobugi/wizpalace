@@ -146,9 +146,7 @@ h1 {
 }
 #chat-log-container {
   padding-top: 2rem;
-  width: 90%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -159,6 +157,8 @@ h1 {
 #chat-log {
   width: 90%;
   padding-top: 5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #form-container {
@@ -180,7 +180,7 @@ button {
 }
 
 #message {
-  width: 40%;
+  width: 60%;
 }
 
 .message {
