@@ -176,6 +176,10 @@ button {
   width: 50vw;
 }
 
+.message {
+  margin-bottom: 1rem;
+}
+
 .message--sent {
   color: rgb(0, 45, 91);
   text-align: right;
