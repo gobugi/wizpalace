@@ -141,12 +141,12 @@ h1 {
 }
 #chat-log-container {
   margin-top: 2rem;
-  height: calc(100% - 35rem);
   width: 90%;
   overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  flex: 1;
   align-items: center;
 }
 
@@ -156,12 +156,13 @@ h1 {
 }
 
 form {
+  position: relative;
   display: none;
   width: 100%;
+  top: 40%;
 }
 
 #form-container {
-  position: fixed;  
   width: 100%;
   text-align: center;
   bottom: 0;
