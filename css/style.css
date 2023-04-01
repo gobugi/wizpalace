@@ -29,12 +29,11 @@ main {
   height: 100%;
   width: auto;
   font-size: 1.5rem;
-  position: relative;
 }
 
 header {
   background-color: #20a779;
-  width: 100vw;
+  width: 100%;
   height: 15rem;
   position: fixed;  
   text-align: center;
