@@ -71,21 +71,21 @@ window.addEventListener("DOMContentLoaded", async () => {
   wizProfileText.innerHTML = "Wizard of Oz";
 
   const profiles = [
-    { name: "scarecrow", content: "Hi, I'm Scarecrow." },
-    { name: "tinman", content: "Hi, I'm the Tin Man." },
-    { name: "dorothy", content: "Hi, I'm Dorothy Gale." },
-    { name: "lion", content: "Hi, I'm the Cowardly Lion." },
+    { id: "scarecrow", fullName: "Scarecrow" },
+    { id: "tinman", fullName: "the Tin Man" },
+    { id: "dorothy", fullName: "Dorothy Gale" },
+    { id: "lion", fullName: "the Cowardly Lion" },
   ];
 
   profiles.map((obj) => {
-    document.getElementById(obj.name).addEventListener("click", (e) => {
+    document.getElementById(obj.id).addEventListener("click", (e) => {
       profileContainer.style.display = "none";
       formContainer.style.display = "block";
       h1.style.display = "none";
       header.appendChild(wizProfileContainer);
       wizProfileContainer.appendChild(wizProfileImg);
       wizProfileContainer.appendChild(wizProfileText);
-      const newMessage = { role: "user", content: obj.content };
+      const newMessage = { role: "user", content: `Hi, I'm ${obj.fullName}.` };
       messages.push(newMessage);
       fetchResponse();
     });
