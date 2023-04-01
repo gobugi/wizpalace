@@ -6,7 +6,6 @@ html {
   overflow: hidden;
   scroll-behavior: smooth;
   align-items: center;
-  text-align: center;
 }
 
 html > * {
@@ -21,7 +20,6 @@ body {
   height: 100%;
   width: auto;
   align-items: center;
-  text-align: center;
 }
 
 main {
@@ -163,6 +161,7 @@ h1 {
   padding-top: 5rem;
   overflow-y: auto;
   overflow-x: hidden;
+  align-items: center;
 }
 
 #form-container {
