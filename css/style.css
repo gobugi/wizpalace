@@ -146,7 +146,7 @@ h1 {
 }
 #chat-log-container {
   padding-top: 2rem;
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
