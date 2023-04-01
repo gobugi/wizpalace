@@ -7,7 +7,7 @@ html {
   margin-top: -1px !important;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-  position: absolute;
+  position: static;
 }
 
 body {
