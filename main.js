@@ -51,7 +51,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   // clicking profile
   const profileContainer = document.getElementById("select-profile-container");
-
+  const formContainer = document.getElementById("form-container");
+  
   const scarecrow = document.getElementById("scarecrow");
   const tinman = document.getElementById("tinman");
   const dorothy = document.getElementById("dorothy");
@@ -74,7 +75,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const initialMessage = { role: "user", content: "Hi, I'm Scarecrow." };
     messages.push(initialMessage);
     profileContainer.style.display = "none";
-    form.style.display = "block";
+    formContainer.style.display = "block";
     h1.style.display = "none";
     header.appendChild(wizProfileContainer);
     wizProfileContainer.appendChild(wizProfileImg);
@@ -85,7 +86,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const initialMessage = { role: "user", content: "Hi, I'm the Tin Man." };
     messages.push(initialMessage);
     profileContainer.style.display = "none";
-    form.style.display = "block";
+    formContainer.style.display = "block";
     h1.style.display = "none";
     header.appendChild(wizProfileContainer);
     wizProfileContainer.appendChild(wizProfileImg);
@@ -96,7 +97,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const initialMessage = { role: "user", content: "Hi, I'm Dorothy Gale." };
     messages.push(initialMessage);
     profileContainer.style.display = "none";
-    form.style.display = "block";
+    formContainer.style.display = "block";
     h1.style.display = "none";
     header.appendChild(wizProfileContainer);
     wizProfileContainer.appendChild(wizProfileImg);
@@ -110,7 +111,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     };
     messages.push(initialMessage);
     profileContainer.style.display = "none";
-    form.style.display = "block";
+    formContainer.style.display = "block";
     h1.style.display = "none";
     header.appendChild(wizProfileContainer);
     wizProfileContainer.appendChild(wizProfileImg);
