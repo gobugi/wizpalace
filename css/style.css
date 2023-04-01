@@ -4,6 +4,7 @@ html {
   height: 100% !important;
   width: auto !important;
   overflow: hidden !important;
+  -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
 
@@ -15,6 +16,7 @@ body {
   height: 100% !important;
   width: auto !important;
   overflow: hidden !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 main {
@@ -24,6 +26,7 @@ main {
   height: 100% !important;
   width: auto !important;
   overflow: hidden !important;
+  -webkit-overflow-scrolling: touch;
   font-size: 1.5rem;
 }
 header {
