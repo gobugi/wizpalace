@@ -138,7 +138,7 @@ h1 {
 }
 #chat-log-container {
   margin-top: 2rem;
-  height: calc(100vh - 25rem);
+  height: calc(100vh - 30rem);
   width: 95%;
   overflow-y: auto;
 }
