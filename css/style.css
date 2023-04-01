@@ -140,7 +140,7 @@ h1 {
 #chat-log-container {
   margin-top: 2rem;
   height: calc(100vh - 40rem);
-  width: 100%;
+  width: 90%;
   overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
@@ -155,6 +155,7 @@ h1 {
 
 form {
   display: none;
+  width: 100%;
 }
 
 #form-container {
@@ -163,6 +164,10 @@ form {
   text-align: center;
   bottom: 0;
   height: 10rem;
+}
+
+#message {
+  width: 50vw;
 }
 
 .message--sent {
