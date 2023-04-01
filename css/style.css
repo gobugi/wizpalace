@@ -49,6 +49,27 @@ h1 {
   text-align: center;
 }
 
+#select-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+  font-style: italic;
+  -webkit-animation: profilesAnimation 1000s forwards; 
+  animation: profilesAnimation 1000s forwards;
+}
+
+@keyframes profilesAnimation {
+  0%    {opacity: 0;}
+  0.5%  {opacity: 0;}
+  0.7%  {opacity: 1;}
+}
+@-webkit-keyframes profilesAnimation {
+  0%    {opacity: 0;}
+  0.5%  {opacity: 0;}
+  0.7%  {opacity: 1;}
+}
+
 #wiz-head {
   padding-top: 15rem;
   -webkit-animation: headAnimation 5s forwards; 
@@ -68,28 +89,6 @@ h1 {
   70%  {opacity: 1; width:90%; height:auto;}
   99%  {opacity: 0; width:90%; height:auto;}
   100% {opacity: 0; width:0%; height:0%;}
-}
-
-#select-profile-container {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 2rem;
-  font-style: italic;
-  -webkit-animation: profilesAnimation 1000s forwards; 
-  animation: profilesAnimation 1000s forwards;
-}
-
-@keyframes profilesAnimation {
-  0%    {opacity: 0;}
-  0.5%  {opacity: 0;}
-  0.7%  {opacity: 1;}
-}
-@-webkit-keyframes profilesAnimation {
-  0%    {opacity: 0;}
-  0.5%  {opacity: 0;}
-  0.7%  {opacity: 1;}
 }
 
 #who-are-you {
