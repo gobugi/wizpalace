@@ -138,7 +138,7 @@ h1 {
 #chat-log-container {
   margin-top: 2rem;
   width: 90%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-wrap: wrap;
