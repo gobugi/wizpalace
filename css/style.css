@@ -12,7 +12,8 @@ body {
   line-height: 1.5;
   background: rgb(225,250,242);
   background: linear-gradient(170deg, rgba(225,250,242,1) 0%, rgba(4,84,52,1) 100%);
-  overflow-y:hidden;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
   height: 100%;
 }
 
@@ -22,6 +23,8 @@ main {
   align-items: center;
   height: 100%;
   font-size: 1.5rem;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 header {
   background-color: #20a779;
