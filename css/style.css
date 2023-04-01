@@ -31,9 +31,10 @@ main {
   font-size: 1.5rem;
   position: relative;
 }
+
 header {
   background-color: #20a779;
-  width: 100%;
+  width: 100vw;
   height: 15rem;
   position: fixed;  
   text-align: center;
@@ -50,7 +51,7 @@ h1 {
   height: 15rem;
   margin: 0;
   line-height: 15rem;
-  width: 100vw;
+  width: 100%;
   text-align: center;
 }
 
