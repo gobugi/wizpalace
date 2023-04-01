@@ -155,13 +155,13 @@ h1 {
   flex-direction: column;
   flex: 1;
   align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #chat-log {
   width: 90%;
   padding-top: 5rem;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 #form-container {
