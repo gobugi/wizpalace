@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   // Initialize the AI model immediately
   const initializeAI = async () => {
     try {
-      generator = await pipeline('text-generation', 'Xenova/distilgpt2');
+      generator = await pipeline('text-generation', 'Xenova/gpt2');
       
       // Add Wizard's opening statement to conversation history
       const wizardOpening = "I am Oz, the Great and Terrible. Who are you, and why do you seek me?";
@@ -34,17 +34,17 @@ window.addEventListener("DOMContentLoaded", async () => {
       // Build conversation context for the Wizard (without role labels)
       const conversationContext = messages.map(msg => msg.content).join('\n\n');
       
-      const prompt = `You are the powerful wizard of Oz. Answer questions and give advice. Be wise and mysterious. Speak in first person.
+      const prompt = `You are the Great and Powerful Wizard of Oz. You are wise, mysterious, and dramatic. Give thoughtful advice and answer questions with authority. Never break character.
 
-Previous conversation:
 ${conversationContext}
 
-Response:`;
+Wizard:`;
       
       const result = await generator(prompt, {
-        max_new_tokens: 100,
-        temperature: 0.7,
+        max_new_tokens: 150,
+        temperature: 0.8,
         do_sample: true,
+        top_p: 0.9,
       });
       
       let responseText = result[0].generated_text.replace(prompt, '').trim();
@@ -52,6 +52,9 @@ Response:`;
       // Clean up any unwanted prefixes
       responseText = responseText.replace(/^(Wizard of Oz:|Wizard:|Visitor:|Response:)/i, '').trim();
       responseText = responseText.replace(/\n(Wizard of Oz:|Wizard:|Visitor:).*$/gi, '').trim();
+      
+      // Stop at natural conversation breaks
+      responseText = responseText.split('\n')[0].trim();
       
       // If response is empty or too short, provide a fallback
       if (!responseText || responseText.length < 10) {
