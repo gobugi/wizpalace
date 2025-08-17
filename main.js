@@ -1,41 +1,77 @@
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js';
+
 window.addEventListener("DOMContentLoaded", async () => {
   document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
 
   let messages = [];
+  let generator = null;
+  
+  // Initialize the AI model
+  const initializeAI = async () => {
+    try {
+      const loadingElement = document.createElement("div");
+      loadingElement.classList.add("message", "message--received");
+      loadingElement.innerHTML = `<div class="message__text">🧙‍♂️ The Wizard is awakening... (Loading AI model, this may take a moment)</div>`;
+      chatLog.appendChild(loadingElement);
+      
+      generator = await pipeline('text-generation', 'Xenova/distilgpt2');
+      
+      loadingElement.innerHTML = `<div class="message__text">🧙‍♂️ The Great and Powerful Wizard of Oz is ready to meet you!</div>`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    } catch (error) {
+      console.error('Failed to load AI model:', error);
+    }
+  };
 
-  const fetchResponse = () => {
-    fetch("https://wizpalace.azurewebsites.net/api/gptfunction?", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        let newAssistantMessage = {
-          role: "assistant",
-          content: `${data.completion.content}`,
-        };
-        messages.push(newAssistantMessage);
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("message");
-        messageElement.classList.add("message--received");
-        messageElement.innerHTML = `
-      <div class="message__text">${data.completion.content}</div>
-    `;
-        chatLog.appendChild(messageElement);
-        chatLog.scrollTop = chatLog.scrollHeight;
+  const fetchResponse = async () => {
+    if (!generator) {
+      await initializeAI();
+    }
+    
+    try {
+      // Get the last user message
+      const lastMessage = messages[messages.length - 1];
+      const prompt = `You are the wise and helpful Wizard of Oz. ${lastMessage.content}`;
+      
+      const result = await generator(prompt, {
+        max_new_tokens: 100,
+        temperature: 0.7,
+        do_sample: true,
       });
+      
+      let responseText = result[0].generated_text.replace(prompt, '').trim();
+      
+      // If response is empty or too short, provide a fallback
+      if (!responseText || responseText.length < 10) {
+        responseText = "The Great Wizard ponders your words and will provide wisdom in due time!";
+      }
+      
+      let newAssistantMessage = {
+        role: "assistant",
+        content: responseText,
+      };
+      messages.push(newAssistantMessage);
+      
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("message");
+      messageElement.classList.add("message--received");
+      messageElement.innerHTML = `<div class="message__text">${responseText}</div>`;
+      chatLog.appendChild(messageElement);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    } catch (error) {
+      console.error('AI generation error:', error);
+      const errorElement = document.createElement("div");
+      errorElement.classList.add("message", "message--received");
+      errorElement.innerHTML = `<div class="message__text">🧙‍♂️ The Wizard's crystal ball is cloudy. Please try again!</div>`;
+      chatLog.appendChild(errorElement);
+    }
   };
 
   const chatLog = document.getElementById("chat-log");
   const message = document.getElementById("message");
   const form = document.querySelector("form");
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const messageText = message.value;
     const newMessage = { role: "user", content: `${messageText}` };
@@ -50,7 +86,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
 
-    fetchResponse();
+    await fetchResponse();
   });
 
   // clicking profile
@@ -78,7 +114,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   ];
 
   profiles.map((obj) => {
-    document.getElementById(obj.id).addEventListener("click", (e) => {
+    document.getElementById(obj.id).addEventListener("click", async () => {
       profileContainer.style.display = "none";
       formContainer.style.display = "block";
       h1.style.display = "none";
@@ -87,7 +123,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       wizProfileContainer.appendChild(wizProfileText);
       const newMessage = { role: "user", content: `Hi, I'm ${obj.fullName}.` };
       messages.push(newMessage);
-      fetchResponse();
+      await fetchResponse();
     });
   });
 
