@@ -31,17 +31,15 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
     
     try {
-      // Build conversation context for the Wizard
-      const conversationContext = messages.map(msg => 
-        msg.role === 'user' ? `Visitor: ${msg.content}` : `Wizard: ${msg.content}`
-      ).join('\n');
+      // Build conversation context for the Wizard (without role labels)
+      const conversationContext = messages.map(msg => msg.content).join('\n\n');
       
-      const prompt = `You are the Great and Powerful Wizard of Oz. You must ONLY speak as the Wizard. Never speak for the visitor. Stay in character as the mysterious, wise Wizard from behind the curtain.
+      const prompt = `You are the powerful wizard of Oz. Answer questions and give advice. Be wise and mysterious. Speak in first person.
 
 Previous conversation:
 ${conversationContext}
 
-The Wizard responds:`;
+Response:`;
       
       const result = await generator(prompt, {
         max_new_tokens: 100,
@@ -50,6 +48,10 @@ The Wizard responds:`;
       });
       
       let responseText = result[0].generated_text.replace(prompt, '').trim();
+      
+      // Clean up any unwanted prefixes
+      responseText = responseText.replace(/^(Wizard of Oz:|Wizard:|Visitor:|Response:)/i, '').trim();
+      responseText = responseText.replace(/\n(Wizard of Oz:|Wizard:|Visitor:).*$/gi, '').trim();
       
       // If response is empty or too short, provide a fallback
       if (!responseText || responseText.length < 10) {
@@ -121,13 +123,16 @@ The Wizard responds:`;
 
   const profiles = [
     { id: "scarecrow", fullName: "Scarecrow" },
-    { id: "tinman", fullName: "the Tin Man" },
+    { id: "tinman", fullName: "Tin Man" },
     { id: "dorothy", fullName: "Dorothy Gale" },
-    { id: "lion", fullName: "the Cowardly Lion" },
+    { id: "lion", fullName: "Cowardly Lion" },
   ];
 
   profiles.map((obj) => {
     document.getElementById(obj.id).addEventListener("click", async () => {
+      // Store the fullName for use in nested callbacks
+      const selectedCharacterName = obj.fullName;
+      
       // Step 1: Start h1 and profile container fade out simultaneously
       h1.classList.add("h1-fade-out");
       profileContainer.classList.add("fade-out");
@@ -156,13 +161,13 @@ The Wizard responds:`;
           // Show wizard's introduction message
           const wizardIntroElement = document.createElement("div");
           wizardIntroElement.classList.add("message", "message--received", "fade-in");
-          wizardIntroElement.innerHTML = `<div class="message__text">I... AM... OZ... the Great and Terrible.<br>Why do you seek me?</div>`;
+          wizardIntroElement.innerHTML = `<div class="message__text">I... AM... OZ... the Great and Terrible.<br>Why do you seek me, ${selectedCharacterName}?</div>`;
           chatLog.appendChild(wizardIntroElement);
           chatLog.scrollTop = chatLog.scrollHeight;
         }, 1000);
       }, 1000);
       
-      const newMessage = { role: "user", content: `Hi, I'm ${obj.fullName}.` };
+      const newMessage = { role: "user", content: `Hi, I'm ${selectedCharacterName}.` };
       messages.push(newMessage);
     });
   });
