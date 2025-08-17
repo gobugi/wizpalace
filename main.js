@@ -6,32 +6,42 @@ window.addEventListener("DOMContentLoaded", async () => {
   let messages = [];
   let generator = null;
   
-  // Initialize the AI model
+  // Initialize the AI model immediately
   const initializeAI = async () => {
     try {
-      const loadingElement = document.createElement("div");
-      loadingElement.classList.add("message", "message--received");
-      loadingElement.innerHTML = `<div class="message__text">🧙‍♂️ The Wizard is awakening... (Loading AI model, this may take a moment)</div>`;
-      chatLog.appendChild(loadingElement);
-      
       generator = await pipeline('text-generation', 'Xenova/distilgpt2');
       
-      loadingElement.innerHTML = `<div class="message__text">🧙‍♂️ The Great and Powerful Wizard of Oz is ready to meet you!</div>`;
-      chatLog.scrollTop = chatLog.scrollHeight;
+      // Add Wizard's opening statement to conversation history
+      const wizardOpening = "I am Oz, the Great and Terrible. Who are you, and why do you seek me?";
+      messages.push({ role: "assistant", content: wizardOpening });
     } catch (error) {
       console.error('Failed to load AI model:', error);
     }
   };
 
+  // Start loading AI model after wiz-head animation completes (5 seconds)
+  setTimeout(() => {
+    initializeAI();
+  }, 5000);
+
   const fetchResponse = async () => {
-    if (!generator) {
-      await initializeAI();
+    // Wait for generator to be ready if it's still loading
+    while (!generator) {
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
     
     try {
-      // Get the last user message
-      const lastMessage = messages[messages.length - 1];
-      const prompt = `You are the wise and helpful Wizard of Oz. ${lastMessage.content}`;
+      // Build conversation context for the Wizard
+      const conversationContext = messages.map(msg => 
+        msg.role === 'user' ? `Visitor: ${msg.content}` : `Wizard: ${msg.content}`
+      ).join('\n');
+      
+      const prompt = `You are the Great and Powerful Wizard of Oz. You must ONLY speak as the Wizard. Never speak for the visitor. Stay in character as the mysterious, wise Wizard from behind the curtain.
+
+Previous conversation:
+${conversationContext}
+
+The Wizard responds:`;
       
       const result = await generator(prompt, {
         max_new_tokens: 100,
@@ -53,15 +63,14 @@ window.addEventListener("DOMContentLoaded", async () => {
       messages.push(newAssistantMessage);
       
       const messageElement = document.createElement("div");
-      messageElement.classList.add("message");
-      messageElement.classList.add("message--received");
+      messageElement.classList.add("message", "message--received", "fade-in");
       messageElement.innerHTML = `<div class="message__text">${responseText}</div>`;
       chatLog.appendChild(messageElement);
       chatLog.scrollTop = chatLog.scrollHeight;
     } catch (error) {
       console.error('AI generation error:', error);
       const errorElement = document.createElement("div");
-      errorElement.classList.add("message", "message--received");
+      errorElement.classList.add("message", "message--received", "fade-in");
       errorElement.innerHTML = `<div class="message__text">🧙‍♂️ The Wizard's crystal ball is cloudy. Please try again!</div>`;
       chatLog.appendChild(errorElement);
     }
@@ -71,22 +80,26 @@ window.addEventListener("DOMContentLoaded", async () => {
   const message = document.getElementById("message");
   const form = document.querySelector("form");
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     const messageText = message.value;
     const newMessage = { role: "user", content: `${messageText}` };
     messages.push(newMessage);
+    
+    // Immediately clear input and show user message
     message.value = "";
     const messageElement = document.createElement("div");
-    messageElement.classList.add("message");
-    messageElement.classList.add("message--sent");
+    messageElement.classList.add("message", "message--sent", "fade-in");
     messageElement.innerHTML = `
           <div class="message__text">${messageText}</div>
         `;
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
 
-    await fetchResponse();
+    // Process AI response separately (non-blocking)
+    setTimeout(() => {
+      fetchResponse();
+    }, 0);
   });
 
   // clicking profile
@@ -115,15 +128,42 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   profiles.map((obj) => {
     document.getElementById(obj.id).addEventListener("click", async () => {
-      profileContainer.style.display = "none";
-      formContainer.style.display = "block";
-      h1.style.display = "none";
-      header.appendChild(wizProfileContainer);
-      wizProfileContainer.appendChild(wizProfileImg);
-      wizProfileContainer.appendChild(wizProfileText);
+      // Step 1: Start h1 and profile container fade out simultaneously
+      h1.classList.add("h1-fade-out");
+      profileContainer.classList.add("fade-out");
+      
+      // Step 2: After fade outs complete (1s), show and fade in wiz-profile-container and form
+      setTimeout(() => {
+        // Hide profile container completely
+        profileContainer.style.display = "none";
+        
+        // Prepare wizard profile elements
+        header.appendChild(wizProfileContainer);
+        wizProfileContainer.appendChild(wizProfileImg);
+        wizProfileContainer.appendChild(wizProfileText);
+        wizProfileContainer.classList.add("wiz-profile-fade-in");
+        
+        // Show form container and chat log with fade-in simultaneously
+        formContainer.style.display = "block";
+        formContainer.classList.add("wiz-profile-fade-in");
+        
+        // Show chat log container
+        const chatLogContainer = document.getElementById("chat-log-container");
+        chatLogContainer.style.display = "flex";
+        
+        // Step 3: After wiz-profile-container and form fade in completes (1s), show wizard message
+        setTimeout(() => {
+          // Show wizard's introduction message
+          const wizardIntroElement = document.createElement("div");
+          wizardIntroElement.classList.add("message", "message--received", "fade-in");
+          wizardIntroElement.innerHTML = `<div class="message__text">I... AM... OZ... the Great and Terrible.<br>Why do you seek me?</div>`;
+          chatLog.appendChild(wizardIntroElement);
+          chatLog.scrollTop = chatLog.scrollHeight;
+        }, 1000);
+      }, 1000);
+      
       const newMessage = { role: "user", content: `Hi, I'm ${obj.fullName}.` };
       messages.push(newMessage);
-      await fetchResponse();
     });
   });
 
