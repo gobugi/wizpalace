@@ -298,8 +298,8 @@ h1 {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 600px;
-  padding: 1.5rem;
+  max-width: calc(100vw - 40px);
+  padding: 2rem;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   display: none;
