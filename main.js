@@ -136,6 +136,9 @@ Wizard:`;
       // Store the fullName for use in nested callbacks
       const selectedCharacterName = obj.fullName;
       
+      // Trigger background transition
+      document.body.classList.add("character-selected");
+      
       // Step 1: Start h1 and profile container fade out simultaneously
       h1.classList.add("h1-fade-out");
       profileContainer.classList.add("fade-out");

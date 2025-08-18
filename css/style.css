@@ -1,6 +1,7 @@
 html {
   font-size: 62.5%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", system-ui, sans-serif;
   height: 100%;
   width: auto;
   overflow: hidden;
@@ -15,10 +16,28 @@ html > * {
 body {
   font-size: 2rem;
   line-height: 1.5;
-  background: #f8f9fa;
+  background: linear-gradient(170deg, rgba(225, 250, 242, 1) 0%, #34c759 100%);
   height: 100%;
   width: auto;
   align-items: center;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: -1;
+}
+
+body.character-selected::before {
+  opacity: 1;
 }
 
 main {
@@ -31,28 +50,30 @@ main {
 }
 
 header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #F5F5F5;
   width: 100%;
   height: 15rem;
-  position: fixed;  
+  position: fixed;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 h1 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 4.5rem;
+  font-family: "Libre Baskerville", serif;
+  font-size: 5rem;
   font-weight: bolder;
-  color: rgb(255, 255, 255);
+  color: #34C759;
   height: 15rem;
   margin: 0;
   line-height: 15rem;
   width: 100%;
   text-align: center;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px #333;
 }
 
 #select-profile-container {
@@ -62,19 +83,31 @@ h1 {
   font-size: 2rem;
   font-style: italic;
   margin-top: 15rem;
-  -webkit-animation: profilesAnimation 1000s forwards; 
+  -webkit-animation: profilesAnimation 1000s forwards;
   animation: profilesAnimation 1000s forwards;
 }
 
 @keyframes profilesAnimation {
-  0%    {opacity: 0;}
-  0.5%  {opacity: 0;}
-  0.7%  {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+  0.5% {
+    opacity: 0;
+  }
+  0.7% {
+    opacity: 1;
+  }
 }
 @-webkit-keyframes profilesAnimation {
-  0%    {opacity: 0;}
-  0.5%  {opacity: 0;}
-  0.7%  {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+  0.5% {
+    opacity: 0;
+  }
+  0.7% {
+    opacity: 1;
+  }
 }
 
 .fade-in {
@@ -83,8 +116,12 @@ h1 {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .fade-out {
@@ -92,8 +129,12 @@ h1 {
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .h1-fade-out {
@@ -101,16 +142,16 @@ h1 {
 }
 
 @keyframes h1FadeOut {
-  from { 
-    opacity: 1; 
+  from {
+    opacity: 1;
     width: 100%;
   }
-  99% { 
+  99% {
     opacity: 0;
     width: 100%;
   }
-  to { 
-    opacity: 0; 
+  to {
+    opacity: 0;
     width: 0;
     overflow: hidden;
   }
@@ -122,8 +163,12 @@ h1 {
 }
 
 @keyframes wizProfileFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 #wiz-head {
@@ -133,23 +178,45 @@ h1 {
   width: auto;
   height: auto;
   object-fit: contain;
-  -webkit-animation: headAnimation 5s forwards; 
+  -webkit-animation: headAnimation 5s forwards;
   animation: headAnimation 5s forwards;
 }
 
 @keyframes headAnimation {
-  0%   {opacity: 0;}
-  30%  {opacity: 1;}
-  70%  {opacity: 1;}
-  99%  {opacity: 0;}
-  100% {opacity: 0; display: none;}
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
 }
 @-webkit-keyframes headAnimation {
-  0%   {opacity: 0;}
-  30%  {opacity: 1;}
-  70%  {opacity: 1;}
-  99%  {opacity: 0;}
-  100% {opacity: 0; display: none;}
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
 }
 
 #who-are-you {
@@ -168,8 +235,8 @@ h1 {
 #profiles > div {
   height: 20rem;
   width: 20rem;
-  display: flex; 
-  flex-basis: 50%;  
+  display: flex;
+  flex-basis: 50%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -216,6 +283,7 @@ h1 {
   overflow-y: auto;
   overflow-x: hidden;
   padding-bottom: 12rem;
+  background-color: #FFFFFF;
 }
 
 #chat-log {
@@ -234,21 +302,24 @@ h1 {
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
   display: none;
   opacity: 0;
 }
 
 form {
+  width: 100%;
+}
+
+.input-container {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 1rem;
   width: 100%;
 }
 
 #message {
-  flex: 1;
-  padding: 1.2rem 1.8rem;
+  width: 100%;
+  padding: 1.2rem 6.4rem 1.2rem 1.8rem;
   border: 2px solid #e0e0e0;
   border-radius: 25px;
   font-size: 1.6rem;
@@ -258,28 +329,31 @@ form {
 }
 
 #message:focus {
-  border-color: #007aff;
+  border-color: #34c759;
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
 button {
-  background: #007aff;
+  position: absolute;
+  right: 0.7rem;
+  top: 0.6rem;
+  background: #34c759;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 3.4rem;
+  height: 3.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 1.4rem;
+  font-size: 3.6rem;
   font-weight: 600;
 }
 
 button:hover {
-  background: #0056cc;
+  background: #34c759;
   transform: scale(1.05);
 }
 
@@ -314,7 +388,7 @@ button:active {
 }
 
 .message--sent .message__text {
-  background: #007aff;
+  background: #34c759;
   color: white;
   border-bottom-right-radius: 6px;
 }
@@ -324,4 +398,3 @@ button:active {
   color: #333;
   border-bottom-left-radius: 6px;
 }
-

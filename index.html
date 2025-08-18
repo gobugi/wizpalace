@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -46,8 +49,10 @@
       </div>
       <div id="form-container">
         <form action="">
-          <input type="text" name="message" id="message">
-          <button type="submit">Send</button>
+          <div class="input-container">
+            <input type="text" name="message" id="message">
+            <button type="submit"><i class="fa-solid fa-arrow-up fa-xs"></i></button>
+          </div>
         </form>
       </div>
     </main>
