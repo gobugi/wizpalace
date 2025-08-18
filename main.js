@@ -249,7 +249,7 @@ Wizard:`;
           // Show wizard's introduction message
           const wizardIntroElement = document.createElement("div");
           wizardIntroElement.classList.add("message", "message--received", "fade-in");
-          wizardIntroElement.innerHTML = `<div class="message__text">I... AM... OZ... the Great and Terrible.<br>Why do you seek me, ${selectedCharacterName}?</div>`;
+          wizardIntroElement.innerHTML = `<div class="message__text">I am Oz, the Great and Terrible.<br>Why do you seek me, ${selectedCharacterName}?</div>`;
           chatLog.appendChild(wizardIntroElement);
           chatLog.scrollTop = chatLog.scrollHeight;
         }, 1000);
