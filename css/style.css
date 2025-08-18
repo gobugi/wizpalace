@@ -73,7 +73,7 @@ h1 {
   width: 100%;
   text-align: center;
   text-transform: uppercase;
-  text-shadow: 2px 2px 4px #333;
+  text-shadow: 3px 3px 6px #333;
 }
 
 #select-profile-container {
@@ -282,6 +282,12 @@ h1 {
   overflow-x: hidden;
   padding-bottom: 12rem;
   background-color: #FFFFFF;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#chat-log-container::-webkit-scrollbar {
+  display: none;
 }
 
 #chat-log {
@@ -335,7 +341,7 @@ button {
   position: absolute;
   right: 0.7rem;
   top: 0.6rem;
-  background: #34c759;
+  background: #E0E0E0;
   color: white;
   border: none;
   border-radius: 50%;
@@ -345,17 +351,26 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
   font-size: 3.6rem;
   font-weight: 600;
 }
 
-button:hover {
-  background: #34c759;
+button.button-active {
+  background: #34C759;
+}
+
+button.button-inactive {
+  background: #E0E0E0;
+  cursor: default;
+}
+
+button.button-active:hover {
+  background: #2fb653;
   transform: scale(1.05);
 }
 
-button:active {
+button.button-active:active {
   transform: scale(0.95);
 }
 

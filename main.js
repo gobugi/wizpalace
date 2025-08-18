@@ -28,6 +28,23 @@ window.addEventListener("DOMContentLoaded", async () => {
   const chatLog = document.getElementById("chat-log");
   const message = document.getElementById("message");
   const form = document.querySelector("form");
+  const submitButton = document.querySelector("button");
+
+  // Function to update button state based on input content
+  const updateButtonState = () => {
+    const hasContent = message.value.trim().length > 0;
+    if (hasContent) {
+      submitButton.className = "button-active";
+    } else {
+      submitButton.className = "button-inactive";
+    }
+  };
+
+  // Initialize button state
+  updateButtonState();
+
+  // Listen for input changes
+  message.addEventListener("input", updateButtonState);
 
   // Thinking animation functions
   let thinkingElement = null;
@@ -146,14 +163,29 @@ Wizard:`;
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const messageText = message.value;
+    const messageText = message.value.trim();
+    
+    // Prevent submission if message is empty
+    if (!messageText) {
+      return;
+    }
+    
     const newMessage = { role: "user", content: `${messageText}` };
     messages.push(newMessage);
     
     console.log("Form submitted");
 
+    // Trigger button animation
+    if (submitButton.className === "button-active") {
+      submitButton.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        submitButton.style.removeProperty("transform");
+      }, 150);
+    }
+
     // TRIGGER 1 PART 1: Immediately clear input and show user message
     message.value = "";
+    updateButtonState();
     const messageElement = document.createElement("div");
     messageElement.classList.add("message", "message--sent", "fade-in");
     messageElement.innerHTML = `
