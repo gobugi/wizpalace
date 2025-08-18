@@ -24,12 +24,59 @@ window.addEventListener("DOMContentLoaded", async () => {
     initializeAI();
   }, 5000);
 
+  // Get DOM elements
+  const chatLog = document.getElementById("chat-log");
+  const message = document.getElementById("message");
+  const form = document.querySelector("form");
+
+  // Thinking animation functions
+  let thinkingElement = null;
+  let aiProcessingComplete = false;
+  
+  const showThinkingIndicator = () => {
+    console.log("=== showThinkingIndicator function START ===");
+    console.log("chatLog element:", chatLog);
+    console.log("Current thinkingElement:", thinkingElement);
+    
+    thinkingElement = document.createElement("div");
+    thinkingElement.classList.add("thinking-indicator", "fade-in");
+    thinkingElement.innerHTML = `
+      <div class="message__text">
+        <div class="thinking-dots">
+          <div class="thinking-dot"></div>
+          <div class="thinking-dot"></div>
+          <div class="thinking-dot"></div>
+        </div>
+      </div>
+    `;
+    console.log("Created thinking element:", thinkingElement);
+    chatLog.appendChild(thinkingElement);
+    console.log("Appended thinking element to chatLog");
+    chatLog.scrollTop = chatLog.scrollHeight;
+    console.log("=== showThinkingIndicator function END ===");
+  };
+  
+  const hideThinkingIndicator = () => {
+    console.log("hideThinkingIndicator called, thinkingElement:", thinkingElement);
+    if (thinkingElement && thinkingElement.parentNode) {
+      console.log("Removing thinking element");
+      thinkingElement.remove();
+      thinkingElement = null;
+    } else if (thinkingElement) {
+      console.log("Thinking element exists but has no parent - setting to null");
+      thinkingElement = null;
+    }
+  };
+
   const fetchResponse = async () => {
+    console.log("fetchResponse started");
     // Wait for generator to be ready if it's still loading
     while (!generator) {
+      console.log("Waiting for generator...");
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     
+    console.log("Generator is ready, starting AI generation");
     try {
       // Build conversation context for the Wizard (without role labels)
       const conversationContext = messages.map(msg => msg.content).join('\n\n');
@@ -39,6 +86,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 ${conversationContext}
 
 Wizard:`;
+      
+      // Yield to event loop before starting AI generation to allow timers to fire
+      await new Promise(resolve => setTimeout(resolve, 0));
+      console.log("About to call generator - event loop yielded");
       
       const result = await generator(prompt, {
         max_new_tokens: 150,
@@ -67,6 +118,12 @@ Wizard:`;
       };
       messages.push(newAssistantMessage);
       
+      console.log("AI response generated at:", Date.now(), "- marking AI as complete");
+      // Mark AI processing as complete
+      aiProcessingComplete = true;
+      // Hide thinking indicator before showing response
+      hideThinkingIndicator();
+      
       const messageElement = document.createElement("div");
       messageElement.classList.add("message", "message--received", "fade-in");
       messageElement.innerHTML = `<div class="message__text">${responseText}</div>`;
@@ -74,6 +131,12 @@ Wizard:`;
       chatLog.scrollTop = chatLog.scrollHeight;
     } catch (error) {
       console.error('AI generation error:', error);
+      
+      // Mark AI processing as complete
+      aiProcessingComplete = true;
+      // Hide thinking indicator before showing error
+      hideThinkingIndicator();
+      
       const errorElement = document.createElement("div");
       errorElement.classList.add("message", "message--received", "fade-in");
       errorElement.innerHTML = `<div class="message__text">🧙‍♂️ The Wizard's crystal ball is cloudy. Please try again!</div>`;
@@ -81,17 +144,15 @@ Wizard:`;
     }
   };
 
-  const chatLog = document.getElementById("chat-log");
-  const message = document.getElementById("message");
-  const form = document.querySelector("form");
-
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const messageText = message.value;
     const newMessage = { role: "user", content: `${messageText}` };
     messages.push(newMessage);
     
-    // Immediately clear input and show user message
+    console.log("Form submitted");
+
+    // TRIGGER 1 PART 1: Immediately clear input and show user message
     message.value = "";
     const messageElement = document.createElement("div");
     messageElement.classList.add("message", "message--sent", "fade-in");
@@ -100,11 +161,32 @@ Wizard:`;
         `;
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
+    console.log("User message displayed immediately");
 
-    // Process AI response separately (non-blocking)
+    // TRIGGER 1 PART 2: Show thinking bubble exactly 1 second after form submission
+    // Reset AI completion flag for this new request
+    aiProcessingComplete = false;
+    
+    console.log("Setting thinking bubble timer for 1 second from now at:", Date.now());
+    const thinkingTimer = setTimeout(() => {
+      console.log("THINKING BUBBLE TIMER FIRED at:", Date.now(), "- checking if AI still processing");
+      console.log("aiProcessingComplete flag:", aiProcessingComplete);
+      if (!aiProcessingComplete) {
+        console.log("AI still processing - showing thinking bubble");
+        showThinkingIndicator();
+      } else {
+        console.log("AI already finished - not showing thinking bubble");
+      }
+    }, 2000);
+    console.log("Thinking bubble timer ID:", thinkingTimer);
+
+    // TRIGGER 2: Start AI processing in background (delayed to allow timer to fire)
     setTimeout(() => {
-      fetchResponse();
-    }, 0);
+      console.log("Starting AI processing in background");
+      fetchResponse().catch(error => {
+        console.error('Async fetchResponse error:', error);
+      });
+    }, 2100); // Delay AI processing until after thinking bubble should appear
   });
 
   // clicking profile
