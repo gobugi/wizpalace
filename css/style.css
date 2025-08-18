@@ -398,3 +398,16 @@ button:active {
   color: #333;
   border-bottom-left-radius: 6px;
 }
+
+/* Mobile responsive styles */
+@media (max-width: 499px) {
+  h1 {
+    font-size: 3.5rem;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
+  
+  header {
+    padding: 0 1rem;
+  }
+}
