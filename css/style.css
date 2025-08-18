@@ -222,7 +222,6 @@ h1 {
 #who-are-you {
   padding: 2rem;
   padding-top: 4rem;
-  margin-bottom: 0;
 }
 
 #profiles {
@@ -472,6 +471,11 @@ button:active {
   
   header {
     padding: 0 1rem;
+  }
+
+  #who-are-you {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
   }
 }
 
